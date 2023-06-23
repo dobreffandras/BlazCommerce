@@ -11,13 +11,30 @@ public class ProductsService
     {
         this.httpClient = httpClient;
     }
-    public Task<Product[]> GetProducts()
+    public async Task<Response<Product[]>> GetProducts()
     {
-        return httpClient.GetFromJsonAsync<Product[]>("api/products");
+        try
+        {
+            var products = await httpClient.GetFromJsonAsync<Product[]>("api/products");
+            return Response.Ok(products!);
+        } catch (Exception ex) {
+            return Response.Fail<Product[]>(ex.Message);
+        }
     }
 
-    public async Task CreateProduct(NewProduct newProduct)
+    public async Task<Response<Product>> CreateProduct(NewProduct newProduct)
     {
-        await httpClient.PostAsJsonAsync("api/products", newProduct);
+        
+
+        try
+        {
+            var res = await httpClient.PostAsJsonAsync("api/products", newProduct);
+            var prod = await res.Content.ReadFromJsonAsync<Product>();
+            return Response.Ok(prod!);
+        }
+        catch (Exception ex)
+        {
+            return Response.Fail<Product>(ex.Message);
+        }
     }
 }

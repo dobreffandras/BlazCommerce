@@ -78,11 +78,26 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        products = await ProductsService.GetProducts();
+        await LoadProducts();
     }
 
     public async Task OnSubmit()
     {
-        await ProductsService.CreateProduct(newProduct);
+        var res = await ProductsService.CreateProduct(newProduct);
+        if (res.Success)
+        {
+            await LoadProducts();
+        }
+
+        Console.Out.WriteLine("NO!");
+    }
+
+    private async Task LoadProducts()
+    {
+        var res = await ProductsService.GetProducts();
+        if (res.Success)
+        {
+            products = res.Data;
+        }
     }
 }
