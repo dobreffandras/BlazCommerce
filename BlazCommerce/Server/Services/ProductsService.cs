@@ -25,22 +25,10 @@ namespace BlazCommerce.Server.Services
             if (await dataContext.Products.FirstOrDefaultAsync(e => e.Name.Equals(newProduct.Name)) != null)
                 throw new ProductAlreadyExistsException(newProduct.Name);
 
-            var newEntity = new ProductEntity
-            {
-                Name = newProduct.Name,
-                Description = newProduct.Description,
-                Category = newProduct.Category,
-            };
-
+            var newEntity = mapper.Map<ProductEntity>(newProduct);
             await dataContext.Products.AddAsync(newEntity);
             await dataContext.SaveChangesAsync();
-            return new Product
-            {
-                Id = newEntity.Id,
-                Name = newEntity.Name,
-                Description = newEntity.Description,
-                Category = newEntity.Category,
-            };
+            return mapper.Map<Product>(newEntity);
         }
     }
 }

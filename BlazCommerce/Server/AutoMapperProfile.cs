@@ -7,7 +7,7 @@ namespace BlazCommerce.Server
     {
         public AutoMapperProfile()
         {
-            CreateMap<NewProduct, Product>();
+            CreateMap<NewProduct, ProductEntity>();
             CreateMap<Product, ProductEntity>().ReverseMap();
         }
     }
