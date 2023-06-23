@@ -5,5 +5,5 @@ public class DataContext : DbContext
 {
     public DataContext(DbContextOptions options) : base(options) { }
 
-    public virtual DbSet<ProductEntity> Products { get; set;  }
+    public virtual DbSet<ProductEntity> Products { get; set; }
 }

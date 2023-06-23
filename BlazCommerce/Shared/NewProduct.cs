@@ -1,7 +1,10 @@
-﻿namespace BlazCommerce.Shared;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BlazCommerce.Shared;
 
 public class NewProduct
 {
+    [Required(AllowEmptyStrings = false)]
     public string Name { get; set; }
 
     public string? Description { get; set; }

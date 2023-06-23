@@ -1,0 +1,87 @@
+﻿@page "/admin/products"
+@using BlazCommerce.Shared
+@inject HttpClient Http
+
+<PageTitle>Admin - Products</PageTitle>
+
+<h1>Admin - Products</h1>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                if (product is Product prod)
+                {
+                    <tr>
+                        <td>@prod.Id</td>
+                        <td>@prod.Name</td>
+                        <td>@prod.Description</td>
+                        <td>@prod.Category</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+<div class="container">
+    <EditForm Model="@newProduct" OnSubmit="OnSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <div class="row">
+            <div class="col">
+                <label for="name">Name: </label>
+            </div>
+            <div class="col">
+                <InputText 
+                    name="name"
+                    id="name"
+                    @bind-Value="@newProduct.Name" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="description">Description: </label>
+            </div>
+            <div class="col">
+                <InputTextArea 
+                    name="description"
+                    id="description"
+                    @bind-Value="@newProduct.Description" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit">Create Product</button>
+            </div>
+        </div>
+
+    </EditForm>
+</div>
+@code {
+    private Product[]? products;
+    private NewProduct newProduct = new (){ Name = "" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await Http.GetFromJsonAsync<Product[]>("api/products");
+    }
+
+    public async Task OnSubmit()
+    {
+        await Http.PostAsJsonAsync<NewProduct>("api/products", newProduct);
+    }
+}

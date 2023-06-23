@@ -50,6 +50,14 @@
     color: white;
 }
 
+.nav-item hr {
+    color: #d7d7d7;
+}
+
+.nav-item h5 {
+    color: #d7d7d7;
+}
+
 @media (min-width: 641px) {
     .navbar-toggler {
         display: none;
