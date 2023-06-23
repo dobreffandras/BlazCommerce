@@ -1,4 +1,5 @@
-﻿using BlazCommerce.Server.Services;
+﻿using AutoMapper;
+using BlazCommerce.Server.Services;
 
 namespace BlazCommerce
 {

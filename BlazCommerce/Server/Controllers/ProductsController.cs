@@ -17,13 +17,7 @@ namespace BlazCommerce.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return Ok(new[]
-            {
-                new Product(){ Id = 1, Name = "Product1" },
-                new Product(){ Id = 2, Name = "Product2" },
-                new Product(){ Id = 3, Name = "Product3" },
-                new Product(){ Id = 4, Name = "Product4" },
-            });
+            return Ok(await productsService.GetProducts()); // TODO Paged Result 
         }
 
         [HttpPost]
