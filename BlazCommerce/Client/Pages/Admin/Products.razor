@@ -1,6 +1,7 @@
 ﻿@page "/admin/products"
+@using BlazCommerce.Client.Services;
 @using BlazCommerce.Shared
-@inject HttpClient Http
+@inject ProductsService ProductsService
 
 <PageTitle>Admin - Products</PageTitle>
 
@@ -77,11 +78,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        products = await Http.GetFromJsonAsync<Product[]>("api/products");
+        products = await ProductsService.GetProducts();
     }
 
     public async Task OnSubmit()
     {
-        await Http.PostAsJsonAsync<NewProduct>("api/products", newProduct);
+        await ProductsService.CreateProduct(newProduct);
     }
 }
