@@ -21,7 +21,7 @@ namespace BlazCommerce.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BlazCommerce.Shared.Product", b =>
+            modelBuilder.Entity("BlazCommerce.Server.Data.ProductEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
